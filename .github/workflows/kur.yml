@@ -1,0 +1,35 @@
+name: Kur güncelle
+
+# TCMB kurları her iş günü yaklaşık 15:30'da (TSİ) yayımlanır. Yayımlandıktan sonra bir kez,
+# gecikme ihtimaline karşı bir kez daha çalışır. Elle de tetiklenebilir.
+on:
+  schedule:
+    - cron: "50 12 * * 1-5"   # 15:50 TSİ
+    - cron: "20 14 * * 1-5"   # 17:20 TSİ (yedek)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kur
+  cancel-in-progress: false
+
+jobs:
+  guncelle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: TCMB kurunu indir
+        run: python3 guncelle.py
+      - name: Değişiklik varsa kaydet
+        run: |
+          if [ -n "$(git status --porcelain kur.json)" ]; then
+            git config user.name "kur-botu"
+            git config user.email "kur-botu@users.noreply.github.com"
+            git add kur.json
+            git commit -m "Kur güncellendi: $(python3 -c "import json;print(json.load(open('kur.json'))['tarih'])")"
+            git push
+          else
+            echo "Değişiklik yok"
+          fi
