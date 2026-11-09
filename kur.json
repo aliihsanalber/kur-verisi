@@ -1,14 +1,14 @@
 {
  "kaynak": "TCMB",
  "kurTuru": "Döviz Alış / Döviz Satış",
- "tarih": "2026-11-06",
- "guncellendi": "2026-11-06T19:42:28Z",
+ "tarih": "2026-11-09",
+ "guncellendi": "2026-11-09T22:43:32Z",
  "eur": {
-  "alis": 55.8603,
-  "satis": 55.9609
+  "alis": 56.0128,
+  "satis": 56.1137
  },
  "usd": {
-  "alis": 49.9824,
-  "satis": 50.0724
+  "alis": 50.0878,
+  "satis": 50.178
  }
 }
